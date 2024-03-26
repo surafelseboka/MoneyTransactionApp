@@ -25,13 +25,24 @@ public class BankAccount {
     }
 
 
-    public void transferFunds(Checking checking, Saving saving, double amount){
-        if (checking.withdraw(amount)){
-            saving.deposit(amount);
-             System.out.println("Successfully transferred $" + amount + " from " +
-                    checking.getClass().getSimpleName() + " to " +
-                    saving.getClass().getSimpleName());
-        }
+    public void transferFunds(Checking checking, Saving saving, double amount,String whichAccount){
+       if(whichAccount.equalsIgnoreCase("checking")){
+           if (checking.withdraw(amount)){
+               saving.deposit(amount);
+               System.out.println("Successfully transferred $" + amount + " from " +
+                       checking.getClass().getSimpleName() + " to " +
+                       saving.getClass().getSimpleName());
+           }
+       } else if (whichAccount.equalsIgnoreCase("saving")){
+           if (saving.withdraw(amount)){
+               checking.deposit(amount);
+               System.out.println("Successfully transferred $" + amount + " from " +
+                       saving.getClass().getSimpleName() + " to " +
+                       checking.getClass().getSimpleName());
+           }
+        } else{
+           System.out.println("You have entered the wrong account type");
+       }
     }
 
 }
