@@ -11,7 +11,7 @@ public class Saving extends BankAccount {
     }
 
     @Override
-    public void deposit(int amount) {
+    public void deposit(double amount) {
         balance += amount;
     }
 
@@ -19,7 +19,7 @@ public class Saving extends BankAccount {
         double overDraft = amount - balance - overdraft_limit;
         if (overDraft > 0){
             double fee = overDraft * 0.15;
-            balance -= fee;
+            balance = fee * -1;
         } else{
             balance = overDraft;
         }
@@ -27,11 +27,13 @@ public class Saving extends BankAccount {
     }
 
     @Override
-    public void withdraw(int amount) {
+    public boolean withdraw(double amount) {
         if (amount > balance) {
             balance = applyOverDraftFee(amount);
+            return true;
         } else {
             balance -= amount;
+            return false;
         }
     }
 
